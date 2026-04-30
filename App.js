@@ -1,20 +1,20 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useContext } from "react";
+import { Text } from "react-native";
+import { AuthProvider, AuthContext } from "./pages/AuthContext";
+import LoginScreen from "./pages/LoginScreen";
+import HomeScreen from "./pages/HomeScreen";
+
+function MainApp() {
+  const { userData, loading } = useContext(AuthContext);
+
+  if (loading) return <Text style={{ textAlign: "center", marginTop: 50 }}>Loading...</Text>;
+  return userData ? <HomeScreen /> : <LoginScreen />;
+}
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <AuthProvider>
+      <MainApp />
+    </AuthProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
